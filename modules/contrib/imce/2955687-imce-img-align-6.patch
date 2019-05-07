@@ -1,0 +1,269 @@
+diff --git a/css/imce.css b/css/imce.css
+index cd56a65..61a2f89 100644
+--- a/css/imce.css
++++ b/css/imce.css
+@@ -105,6 +105,12 @@
+ .imce-item-preview {
+   text-align: center;
+ }
++.imce-item-uuid {
++  display: none;
++}
++.imce-item-src {
++  display: none;
++}
+ .imce-preview-info > * {
+   display: inline-block;
+   word-wrap: break-word;
+diff --git a/js/imce.Item.js b/js/imce.Item.js
+index 96037bd..d92025b 100644
+--- a/js/imce.Item.js
++++ b/js/imce.Item.js
+@@ -35,7 +35,7 @@
+     var children;
+     var Item = this;
+     if (!Item.el) {
+-      el = Item.el = imce.createEl('<div class="imce-item"><div class="imce-item-date"></div><div class="imce-item-height"></div><div class="imce-item-width"></div><div class="imce-item-size"></div><div class="imce-item-icon imce-ficon"></div><div class="imce-item-name"></div></div>');
++      el = Item.el = imce.createEl('<div class="imce-item"><div class="imce-item-date"></div><div class="imce-item-height"></div><div class="imce-item-width"></div><div class="imce-item-size"></div><div class="imce-item-icon imce-ficon"></div><div class="imce-item-name"></div><div class="imce-item-uuid"></div><div class="imce-item-src"></div></div>');
+       el.onmousedown = imce.eItemMousedown;
+       el.ondblclick = imce.eItemDblclick;
+       el.Item = Item;
+@@ -46,6 +46,8 @@
+       Item.sizeEl = children[3];
+       Item.iconEl = children[4];
+       Item.nameEl = children[5];
++      Item.uuidEl = children[6];
++      Item.srcEl = children[7];
+     }
+   };
+ 
+@@ -247,6 +249,20 @@
+     return imce.formatDate(this.date, dayOnly);
+   };
+ 
++  /**
++   * Formats item uuid.
++   */
++  Item.formatUUID = function () {
++    return this.uuid;
++  };
++
++  /**
++   * Formats item src.
++   */
++  Item.formatSrc = function () {
++    return this.src;
++  };
++
+   /**
+    * Formats item width.
+    */
+@@ -354,6 +370,19 @@
+     this.heightEl.innerHTML = this.formatHeight();
+   };
+ 
++  /**
++   * UUID change handler.
++   */
++  Item.onUuidChange = function (oldval) {
++    this.uuidEl.innerHTML = this.formatUUID();
++  };
++
++  /**
++   * Src change handler.
++   */
++  Item.onSrcChange = function (oldval) {
++    this.srcEl.innerHTML = this.formatSrc();
++  };
+ 
+   /**
+    * Creates preview element.
+@@ -387,6 +416,12 @@
+     if (Item.date) {
+       infoEl.appendChild(imce.createEl('<div class="date">' + Item.formatDate() + '</div>'));
+     }
++    if (Item.uuid) {
++      infoEl.appendChild(imce.createEl('<div class="uuid">' + Item.formatUUID() + '</div>'));
++    }
++    if (Item.src) {
++      infoEl.appendChild(imce.createEl('<div class="src">' + Item.formatSrc() + '</div>'));
++    }
+     // Image
+     if (Item.isImageSource() && imce.getConf('preview_images', 1)) {
+       el = imce.createEl('<div class="imce-preview-image"><img src="' + Item.getUrl(false, true) + '"></div>');
+diff --git a/js/plugins/ckeditor/imce.ckeditor.js b/js/plugins/ckeditor/imce.ckeditor.js
+index 79e1cbb..d2182e0 100644
+--- a/js/plugins/ckeditor/imce.ckeditor.js
++++ b/js/plugins/ckeditor/imce.ckeditor.js
+@@ -92,7 +92,7 @@
+           File = selection[i];
+           // Image
+           if (is_img && File.isImageSource()) {
+-            lines.push('<img src="' + File.getUrl() + '"' + (File.width ? ' width="' + File.width + '"' : '') + (File.height ? ' height="' + File.height + '"' : '') + ' alt="" />');
++            lines.push('<img src="' + File.getUrl() + '"' + (File.width ? ' width="' + File.width + '"' : '') + (File.height ? ' height="' + File.height + '"' : '') + ' alt="" data-entity-type="file" data-entity-uuid="' + File.uuid + '" src="' + File.src + '"/>');
+           }
+           // Link
+           else {
+@@ -130,7 +130,7 @@
+       } catch(err) {}
+       return html;
+     }
+- 
++
+   };
+ 
+ })(jQuery, Drupal, CKEDITOR);
+diff --git a/src/ImceFM.php b/src/ImceFM.php
+index 89de868..47badb3 100644
+--- a/src/ImceFM.php
++++ b/src/ImceFM.php
+@@ -275,9 +275,12 @@ class ImceFM {
+   /**
+    * Creates and returns an imce file/folder object by name.
+    */
+-  public function createItem($type, $name, $conf = NULL) {
++  public function createItem($type, $name, $conf = NULL, $file = NULL) {
+     $item = $type === 'folder' ? new ImceFolder($name, $conf) : new ImceFile($name);
+     $item->setFm($this);
++    if (!empty($file)) {
++      $item->addFile($file);
++    }
+     return $item;
+   }
+ 
+@@ -397,11 +400,12 @@ class ImceFM {
+       if ($path = $parent->getPath()) {
+         $name = $item->name;
+         $uri = $item->getUri();
++        $file = $item->getFile();
+         if ($item->type === 'folder') {
+-          $this->response['added'][$path]['subfolders'][$name] = $this->getFolderProperties($uri);
++          $this->response['added'][$path]['subfolders'][$name] = $this->getFolderProperties($uri, $file);
+         }
+         else {
+-          $this->response['added'][$path]['files'][$name] = $this->getFileProperties($uri);
++          $this->response['added'][$path]['files'][$name] = $this->getFileProperties($uri, $file);
+         }
+       }
+     }
+@@ -426,11 +430,29 @@ class ImceFM {
+   /**
+    * Returns js properties of a file.
+    */
+-  public function getFileProperties($uri) {
+-    $properties = ['date' => filemtime($uri), 'size' => filesize($uri)];
+-    if (preg_match('/\.(jpe?g|png|gif)$/i', $uri) && $info = getimagesize($uri)) {
+-      $properties['width'] = $info[0];
++  public function getFileProperties($uri, $file = NULL) {
++    if (!$file) {
++      $files = \Drupal::entityTypeManager()->getStorage('file')->loadByProperties(['uri' => $uri]);
++      // Get first file
++      if ($files) {
++        $file = $files[key($files)];
++      }
++    }
++
++    if ($file===NULL) {
++      \Drupal::logger('imce')->error('File not found in storage uri:' . $uri);
++      return [];
++    }
++
++    $properties = [
++      'date' => $file->getCreatedTime(),
++      'size' => $file->getSize()
++    ];
++
++    if (preg_match('/\.(jpe?g|png|gif)$/i', $file->getFileUri()) && $info = getimagesize($file->getFileUri())) {      $properties['width'] = $info[0];
+       $properties['height'] = $info[1];
++      $properties['uuid'] = $file->uuid();
++      $properties['src'] = $file->getFileUri();
+     }
+     return $properties;
+   }
+@@ -618,7 +640,7 @@ class ImceFM {
+         // Check session
+         elseif ($this->user->isAuthenticated() && $path = $this->request->getSession()->get('imce_active_path')) {
+           if ($this->checkFolder($path)) {
+-            $conf['active_path'] = $path; 
++            $conf['active_path'] = $path;
+           }
+         }
+       }
+diff --git a/src/ImceFolder.php b/src/ImceFolder.php
+index dd20e3c..df2f678 100644
+--- a/src/ImceFolder.php
++++ b/src/ImceFolder.php
+@@ -189,8 +189,8 @@ class ImceFolder extends ImceItem {
+   /**
+    * Creates and returns a child file/folder object by name.
+    */
+-  public function createItem($type, $name, $conf = NULL) {
+-    $item = $this->fm()->createItem($type, $name, $conf);
++  public function createItem($type, $name, $conf = NULL, $file = NULL) {
++    $item = $this->fm()->createItem($type, $name, $conf, $file);
+     $this->appendItem($item);
+     return $item;
+   }
+@@ -198,8 +198,8 @@ class ImceFolder extends ImceItem {
+   /**
+    * Adds a file by name.
+    */
+-  public function addFile($name) {
+-    return $this->createItem('file', $name);
++  public function addFile($name, $file = NULL) {
++    return $this->createItem('file', $name, NULL, $file);
+   }
+ 
+   /**
+diff --git a/src/ImceItem.php b/src/ImceItem.php
+index 9549fff..f4dcd75 100644
+--- a/src/ImceItem.php
++++ b/src/ImceItem.php
+@@ -49,6 +49,13 @@ abstract class ImceItem {
+    */
+   protected $path;
+ 
++  /**
++   * File.
++   *
++   * @var string
++   */
++  protected $file;
++
+   /**
+    * Constructs the item.
+    *
+@@ -98,6 +105,20 @@ abstract class ImceItem {
+     }
+   }
+ 
++  /**
++   * Set the item file.
++   */
++  public function addFile($file) {
++    $this->file = $file;
++  }
++
++  /**
++   * Returns the item file.
++   */
++  public function getFile() {
++    return $this->file;
++  }
++
+   /**
+    * Selects the item.
+    */
+diff --git a/src/Plugin/ImcePlugin/Upload.php b/src/Plugin/ImcePlugin/Upload.php
+index e10fc39..a2ed2f7 100644
+--- a/src/Plugin/ImcePlugin/Upload.php
++++ b/src/Plugin/ImcePlugin/Upload.php
+@@ -72,7 +72,7 @@ class Upload extends ImcePluginBase {
+         $file->save();
+         // Add to the folder and to js response.
+         $name = $fs->basename($file->getFileUri());
+-        $folder->addFile($name)->addToJs();
++        $folder->addFile($name, $file)->addToJs();
+       }
+     }
+   }
