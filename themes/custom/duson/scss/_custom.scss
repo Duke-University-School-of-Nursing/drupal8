@@ -77,3 +77,13 @@
   max-width: 100%;
   height: auto;
 }
+
+/* Paragraphs background colors */
+.paragraph--color--primary,
+.paragraph--color--secondary,
+.paragraph--color--success,
+.paragraph--color--info,
+.paragraph--color--warning,
+.paragraph--color--danger {
+  background: transparent;
+}

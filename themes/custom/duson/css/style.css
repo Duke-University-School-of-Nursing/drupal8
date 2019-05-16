@@ -9692,3 +9692,14 @@ p:last-child,
   max-width: 100%;
   height: auto;
 }
+
+/* Paragraphs background colors */
+/* line 82, ../scss/_custom.scss */
+.paragraph--color--primary,
+.paragraph--color--secondary,
+.paragraph--color--success,
+.paragraph--color--info,
+.paragraph--color--warning,
+.paragraph--color--danger {
+  background: transparent;
+}
