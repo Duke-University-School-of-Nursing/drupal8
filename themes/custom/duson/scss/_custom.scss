@@ -43,6 +43,9 @@ img {
     &:hover {
       color: #EEE;
     }
+    &.active-trail {
+      background-color: #012169;
+    }
   }
 }
 @media (min-width: 992px) {

@@ -9680,38 +9680,42 @@ img {
 #navbar a:hover {
   color: #EEE;
 }
+/* line 46, ../scss/_custom.scss */
+#navbar a.active-trail {
+  background-color: #012169;
+}
 
 @media (min-width: 992px) {
-  /* line 49, ../scss/_custom.scss */
+  /* line 52, ../scss/_custom.scss */
   .navbar-nav {
     float: right;
     margin: 0;
   }
 
-  /* line 53, ../scss/_custom.scss */
+  /* line 56, ../scss/_custom.scss */
   .navbar-nav > li {
     float: left;
   }
 
-  /* line 56, ../scss/_custom.scss */
+  /* line 59, ../scss/_custom.scss */
   .navbar-nav > li > a {
     padding-top: 15px;
     padding-bottom: 15px;
   }
 }
-/* line 65, ../scss/_custom.scss */
+/* line 68, ../scss/_custom.scss */
 .paragraph--width--full.paragraph--type--bp-carousel.bp-carousel-height-small .carousel-inner .paragraph--type--xeno-hero {
   height: 20vw;
 }
-/* line 72, ../scss/_custom.scss */
+/* line 75, ../scss/_custom.scss */
 .paragraph--width--full.paragraph--type--bp-carousel.bp-carousel-height-medium .carousel-inner .paragraph--type--xeno-hero {
   height: 30vw;
 }
-/* line 79, ../scss/_custom.scss */
+/* line 82, ../scss/_custom.scss */
 .paragraph--width--full.paragraph--type--bp-carousel.bp-carousel-height-large .carousel-inner .paragraph--type--xeno-hero {
   height: 40vw;
 }
-/* line 86, ../scss/_custom.scss */
+/* line 89, ../scss/_custom.scss */
 .paragraph--width--full.paragraph--type--bp-carousel.bp-carousel-height-exlarge .carousel-inner .paragraph--type--xeno-hero {
   height: 60vw;
 }
@@ -9719,7 +9723,7 @@ img {
 /**
 * For ckeditor bootstrap grid images.
 */
-/* line 97, ../scss/_custom.scss */
+/* line 100, ../scss/_custom.scss */
 .two-col img,
 .two-col-left img,
 .two-col-right img,
@@ -9730,7 +9734,7 @@ img {
 }
 
 /* Paragraphs background colors */
-/* line 107, ../scss/_custom.scss */
+/* line 110, ../scss/_custom.scss */
 .paragraph--color--primary,
 .paragraph--color--secondary,
 .paragraph--color--success,
