@@ -1,6 +1,9 @@
 .center {
   text-align: center;
 }
+img {
+  max-width: 100%;
+}
 
 .paragraph--type--xeno-hero__image {
   background-size: cover;
@@ -33,17 +36,23 @@
     }
   }
 }
+#navbar {
+  background-color: #00539B;
+  a {
+    color: #FFF;
+    &:hover {
+      color: #EEE;
+    }
+  }
+}
 @media (min-width: 992px) {
-  /* line 232, ../bootstrap/assets/stylesheets/bootstrap/_navbar.scss */
   .navbar-nav {
     float: right;
     margin: 0;
   }
-  /* line 270, ../bootstrap/assets/stylesheets/bootstrap/_navbar.scss */
   .navbar-nav > li {
     float: left;
   }
-  /* line 272, ../bootstrap/assets/stylesheets/bootstrap/_navbar.scss */
   .navbar-nav > li > a {
     padding-top: 15px;
     padding-bottom: 15px;

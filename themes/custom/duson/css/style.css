@@ -9629,12 +9629,17 @@ p:last-child,
   text-align: center;
 }
 
-/* line 5, ../scss/_custom.scss */
+/* line 4, ../scss/_custom.scss */
+img {
+  max-width: 100%;
+}
+
+/* line 8, ../scss/_custom.scss */
 .paragraph--type--xeno-hero__image {
   background-size: cover;
 }
 
-/* line 10, ../scss/_custom.scss */
+/* line 13, ../scss/_custom.scss */
 #navbar-collapse:not(.in) #block-duson-search {
   max-width: 300px;
   min-width: 40px;
@@ -9645,58 +9650,68 @@ p:last-child,
   right: 0;
   text-align: right;
 }
-/* line 20, ../scss/_custom.scss */
+/* line 23, ../scss/_custom.scss */
 #navbar-collapse:not(.in) #block-duson-search form .form-search {
   display: none;
 }
-/* line 23, ../scss/_custom.scss */
+/* line 26, ../scss/_custom.scss */
 #navbar-collapse:not(.in) #block-duson-search form:hover .form-search {
   display: inline-block;
 }
-/* line 26, ../scss/_custom.scss */
+/* line 29, ../scss/_custom.scss */
 #navbar-collapse:not(.in) #block-duson-search form .input-group-btn {
   width: 0;
 }
-/* line 28, ../scss/_custom.scss */
+/* line 31, ../scss/_custom.scss */
 #navbar-collapse:not(.in) #block-duson-search form .input-group-btn button.form-submit {
   margin: 0 5px;
   border-radius: 4px;
 }
 
+/* line 39, ../scss/_custom.scss */
+#navbar {
+  background-color: #00539B;
+}
+/* line 41, ../scss/_custom.scss */
+#navbar a {
+  color: #FFF;
+}
+/* line 43, ../scss/_custom.scss */
+#navbar a:hover {
+  color: #EEE;
+}
+
 @media (min-width: 992px) {
-  /* line 232, ../bootstrap/assets/stylesheets/bootstrap/_navbar.scss */
-  /* line 38, ../scss/_custom.scss */
+  /* line 49, ../scss/_custom.scss */
   .navbar-nav {
     float: right;
     margin: 0;
   }
 
-  /* line 270, ../bootstrap/assets/stylesheets/bootstrap/_navbar.scss */
-  /* line 43, ../scss/_custom.scss */
+  /* line 53, ../scss/_custom.scss */
   .navbar-nav > li {
     float: left;
   }
 
-  /* line 272, ../bootstrap/assets/stylesheets/bootstrap/_navbar.scss */
-  /* line 47, ../scss/_custom.scss */
+  /* line 56, ../scss/_custom.scss */
   .navbar-nav > li > a {
     padding-top: 15px;
     padding-bottom: 15px;
   }
 }
-/* line 56, ../scss/_custom.scss */
+/* line 65, ../scss/_custom.scss */
 .paragraph--width--full.paragraph--type--bp-carousel.bp-carousel-height-small .carousel-inner .paragraph--type--xeno-hero {
   height: 20vw;
 }
-/* line 63, ../scss/_custom.scss */
+/* line 72, ../scss/_custom.scss */
 .paragraph--width--full.paragraph--type--bp-carousel.bp-carousel-height-medium .carousel-inner .paragraph--type--xeno-hero {
   height: 30vw;
 }
-/* line 70, ../scss/_custom.scss */
+/* line 79, ../scss/_custom.scss */
 .paragraph--width--full.paragraph--type--bp-carousel.bp-carousel-height-large .carousel-inner .paragraph--type--xeno-hero {
   height: 40vw;
 }
-/* line 77, ../scss/_custom.scss */
+/* line 86, ../scss/_custom.scss */
 .paragraph--width--full.paragraph--type--bp-carousel.bp-carousel-height-exlarge .carousel-inner .paragraph--type--xeno-hero {
   height: 60vw;
 }
@@ -9704,7 +9719,7 @@ p:last-child,
 /**
 * For ckeditor bootstrap grid images.
 */
-/* line 88, ../scss/_custom.scss */
+/* line 97, ../scss/_custom.scss */
 .two-col img,
 .two-col-left img,
 .two-col-right img,
@@ -9715,7 +9730,7 @@ p:last-child,
 }
 
 /* Paragraphs background colors */
-/* line 82, ../scss/_custom.scss */
+/* line 107, ../scss/_custom.scss */
 .paragraph--color--primary,
 .paragraph--color--secondary,
 .paragraph--color--success,
