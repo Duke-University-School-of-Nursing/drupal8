@@ -130,6 +130,11 @@ view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
   {% set classes = classes|merge(zoom_levels) %}
 {% endif %}
 
+{% set height_field = content.field_height['#items'].getString() %}
+{% if height_field %}
+  {% set classes = classes|merge([height_field]) %}
+{% endif %}
+
 {# Prints div with classes, & content w/o img/invert/overlay/parallax fields. #}
 <div{{ attributes.addClass(classes).setAttribute('data-overlay', overlay_levels).setAttribute('data-speed', parallax_speeds).setAttribute('data-offset', parallax_offset) }}>
   {% if content.xeno_background_image|render %}

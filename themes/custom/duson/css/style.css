@@ -9624,17 +9624,27 @@ p:last-child,
   margin-top: 0;
 }
 
-/* line 1, ../scss/_custom.scss */
+/* Base styles for all microsites */
+/* Can be overridden in _custom.scss */
+/* line 3, ../scss/_base.scss */
 .center {
   text-align: center;
 }
 
-/* line 5, ../scss/_custom.scss */
-.paragraph--type--xeno-hero__image {
-  background-size: cover;
+/**
+* For ckeditor bootstrap grid images.
+*/
+/* line 10, ../scss/_base.scss */
+.two-col img,
+.two-col-left img,
+.two-col-right img,
+.three-col img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
-/* line 10, ../scss/_custom.scss */
+/* line 20, ../scss/_base.scss */
 #navbar-collapse:not(.in) #block-duson-search {
   max-width: 300px;
   min-width: 40px;
@@ -9645,56 +9655,27 @@ p:last-child,
   right: 0;
   text-align: right;
 }
-/* line 20, ../scss/_custom.scss */
+/* line 30, ../scss/_base.scss */
 #navbar-collapse:not(.in) #block-duson-search form .form-search {
   display: none;
 }
-/* line 23, ../scss/_custom.scss */
+/* line 33, ../scss/_base.scss */
 #navbar-collapse:not(.in) #block-duson-search form:hover .form-search {
   display: inline-block;
 }
-/* line 26, ../scss/_custom.scss */
+/* line 36, ../scss/_base.scss */
 #navbar-collapse:not(.in) #block-duson-search form .input-group-btn {
   width: 0;
 }
-/* line 28, ../scss/_custom.scss */
+/* line 38, ../scss/_base.scss */
 #navbar-collapse:not(.in) #block-duson-search form .input-group-btn button.form-submit {
   margin: 0 5px;
   border-radius: 4px;
 }
 
-/* line 40, ../scss/_custom.scss */
-.paragraph--width--full.paragraph--type--bp-carousel.bp-carousel-height-small .carousel-inner .paragraph--type--xeno-hero {
-  height: 20vw;
-}
-/* line 47, ../scss/_custom.scss */
-.paragraph--width--full.paragraph--type--bp-carousel.bp-carousel-height-medium .carousel-inner .paragraph--type--xeno-hero {
-  height: 30vw;
-}
-/* line 54, ../scss/_custom.scss */
-.paragraph--width--full.paragraph--type--bp-carousel.bp-carousel-height-large .carousel-inner .paragraph--type--xeno-hero {
-  height: 40vw;
-}
-/* line 61, ../scss/_custom.scss */
-.paragraph--width--full.paragraph--type--bp-carousel.bp-carousel-height-exlarge .carousel-inner .paragraph--type--xeno-hero {
-  height: 60vw;
-}
-
-/**
-* For ckeditor bootstrap grid images.
-*/
-/* line 72, ../scss/_custom.scss */
-.two-col img,
-.two-col-left img,
-.two-col-right img,
-.three-col img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
+/* Bootstrap Paragraphs. */
 /* Paragraphs background colors */
-/* line 82, ../scss/_custom.scss */
+/* line 49, ../scss/_base.scss */
 .paragraph--color--primary,
 .paragraph--color--secondary,
 .paragraph--color--success,
@@ -9702,4 +9683,46 @@ p:last-child,
 .paragraph--color--warning,
 .paragraph--color--danger {
   background: transparent;
+}
+
+/* line 61, ../scss/_base.scss */
+.paragraph--width--full.paragraph--type--bp-carousel.bp-carousel-height-small .carousel-inner .paragraph--type--xeno-hero {
+  height: 20vw;
+}
+/* line 68, ../scss/_base.scss */
+.paragraph--width--full.paragraph--type--bp-carousel.bp-carousel-height-medium .carousel-inner .paragraph--type--xeno-hero {
+  height: 30vw;
+}
+/* line 75, ../scss/_base.scss */
+.paragraph--width--full.paragraph--type--bp-carousel.bp-carousel-height-large .carousel-inner .paragraph--type--xeno-hero {
+  height: 40vw;
+}
+/* line 82, ../scss/_base.scss */
+.paragraph--width--full.paragraph--type--bp-carousel.bp-carousel-height-exlarge .carousel-inner .paragraph--type--xeno-hero {
+  height: 60vw;
+}
+
+/* line 89, ../scss/_base.scss */
+.paragraph--type--xeno-hero {
+  background-size: cover;
+}
+/* line 91, ../scss/_base.scss */
+.paragraph--type--xeno-hero.small {
+  min-height: 20vw;
+}
+/* line 94, ../scss/_base.scss */
+.paragraph--type--xeno-hero.medium {
+  min-height: 30vw;
+}
+/* line 97, ../scss/_base.scss */
+.paragraph--type--xeno-hero.large {
+  min-height: 40vw;
+}
+/* line 100, ../scss/_base.scss */
+.paragraph--type--xeno-hero.exlarge {
+  min-height: 60vw;
+}
+/* line 103, ../scss/_base.scss */
+.paragraph--type--xeno-hero.huge {
+  min-height: 80vw;
 }
