@@ -115,3 +115,19 @@ img {
 .paragraph--color--danger {
   background: transparent;
 }
+
+
+/* Footer styles */
+#footer-block {
+  background-color: #00539B;
+  padding: 2vw 0;
+  color: #CCC;
+  .footer-logo-img {
+  }
+  a {
+    color: #FFF;
+    &:hover {
+      color: #EEE;
+    }
+  }
+}

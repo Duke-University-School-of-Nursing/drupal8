@@ -9743,3 +9743,19 @@ img {
 .paragraph--color--danger {
   background: transparent;
 }
+
+/* Footer styles */
+/* line 121, ../scss/_custom.scss */
+#footer-block {
+  background-color: #00539B;
+  padding: 2vw 0;
+  color: #CCC;
+}
+/* line 127, ../scss/_custom.scss */
+#footer-block a {
+  color: #FFF;
+}
+/* line 129, ../scss/_custom.scss */
+#footer-block a:hover {
+  color: #EEE;
+}
