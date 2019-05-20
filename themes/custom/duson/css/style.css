@@ -9752,3 +9752,7 @@ p:last-child,
 article.person h1.title {
   margin-top: 0px;
 }
+/* line 29, ../scss/_custom.scss */
+article.person .person-email {
+  margin: 20px 0 0 0;
+}
