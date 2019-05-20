@@ -9742,3 +9742,13 @@ p:last-child,
 #footer-block a:hover {
   color: #EEE;
 }
+
+/* line 19, ../scss/_custom.scss */
+.staff-listing .views-view-grid .row .person {
+  padding: 0 0 20px 0;
+}
+
+/* line 26, ../scss/_custom.scss */
+article.person h1.title {
+  margin-top: 0px;
+}

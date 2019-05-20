@@ -12,3 +12,18 @@
     }
   }
 }
+
+.staff-listing {
+  .views-view-grid {
+    .row {
+      .person {
+        padding: 0 0 20px 0;
+      }
+    }
+  }
+}
+article.person {
+  h1.title {
+    margin-top: 0px;
+  }
+}
