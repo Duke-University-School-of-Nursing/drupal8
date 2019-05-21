@@ -9727,32 +9727,39 @@ p:last-child,
   min-height: 80vw;
 }
 
+/* Right float menu ul */
+@media all and (min-width: 992px) {
+  /* line 3, ../scss/_custom.scss */
+  .navbar-nav {
+    float: right;
+  }
+}
 /* Footer styles */
-/* line 2, ../scss/_custom.scss */
+/* line 8, ../scss/_custom.scss */
 #footer-block {
   background-color: #00539B;
   padding: 2vw 0;
   color: #CCC;
 }
-/* line 8, ../scss/_custom.scss */
+/* line 14, ../scss/_custom.scss */
 #footer-block a {
   color: #FFF;
 }
-/* line 10, ../scss/_custom.scss */
+/* line 16, ../scss/_custom.scss */
 #footer-block a:hover {
   color: #EEE;
 }
 
-/* line 19, ../scss/_custom.scss */
+/* line 25, ../scss/_custom.scss */
 .staff-listing .views-view-grid .row .person {
   padding: 0 0 20px 0;
 }
 
-/* line 26, ../scss/_custom.scss */
+/* line 33, ../scss/_custom.scss */
 article.person h1.title {
   margin-top: 0px;
 }
-/* line 29, ../scss/_custom.scss */
+/* line 36, ../scss/_custom.scss */
 article.person .person-email {
   margin: 20px 0 0 0;
 }

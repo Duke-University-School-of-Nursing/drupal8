@@ -1,3 +1,9 @@
+/* Right float menu ul */
+@media all and (min-width: 992px) {
+  .navbar-nav {
+    float: right;
+  }
+}
 /* Footer styles */
 #footer-block {
   background-color: #00539B;
@@ -22,6 +28,7 @@
     }
   }
 }
+
 article.person {
   h1.title {
     margin-top: 0px;
