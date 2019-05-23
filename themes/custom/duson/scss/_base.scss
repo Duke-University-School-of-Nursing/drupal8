@@ -89,18 +89,18 @@
 .paragraph--type--xeno-hero {
   background-size: cover;
   &.small {
-    min-height: 20vw;
+    height: 20vw;
   }
   &.medium {
-    min-height: 30vw;
+    height: 30vw;
   }
   &.large {
-    min-height: 40vw;
+    height: 40vw;
   }
   &.exlarge {
-    min-height: 60vw;
+    height: 60vw;
   }
   &.huge {
-    min-height: 80vw;
+    height: 80vw;
   }
 }

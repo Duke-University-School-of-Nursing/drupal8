@@ -9708,23 +9708,23 @@ p:last-child,
 }
 /* line 91, ../scss/_base.scss */
 .paragraph--type--xeno-hero.small {
-  min-height: 20vw;
+  height: 20vw;
 }
 /* line 94, ../scss/_base.scss */
 .paragraph--type--xeno-hero.medium {
-  min-height: 30vw;
+  height: 30vw;
 }
 /* line 97, ../scss/_base.scss */
 .paragraph--type--xeno-hero.large {
-  min-height: 40vw;
+  height: 40vw;
 }
 /* line 100, ../scss/_base.scss */
 .paragraph--type--xeno-hero.exlarge {
-  min-height: 60vw;
+  height: 60vw;
 }
 /* line 103, ../scss/_base.scss */
 .paragraph--type--xeno-hero.huge {
-  min-height: 80vw;
+  height: 80vw;
 }
 
 /* Right float menu ul */
