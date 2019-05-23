@@ -9726,3 +9726,7 @@ p:last-child,
 .paragraph--type--xeno-hero.huge {
   height: 80vw;
 }
+/* line 106, ../scss/_base.scss */
+.paragraph--type--xeno-hero .field--name-field-height {
+  display: none;
+}
