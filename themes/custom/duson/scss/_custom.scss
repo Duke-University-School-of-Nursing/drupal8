@@ -1,10 +1,18 @@
 /* Right float menu ul */
+.navbar-collapse {
+  .navigation {
+    width: 100%;
+  }
+}
 @media all and (min-width: 992px) {
   .navbar-nav {
     float: right;
   }
 }
 /* Footer styles */
+.site-footer {
+  background: transparent;
+}
 #footer-block {
   background-color: #00539B;
   padding: 2vw 0;
