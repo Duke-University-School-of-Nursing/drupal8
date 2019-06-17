@@ -1,0 +1,5 @@
+# Schema for the theme setting configuration file of the Duson theme.
+
+duson.settings:
+  type: theme_settings
+  label: 'Duson 3 settings'
