@@ -34,7 +34,6 @@ regions:
   footer_fifth: 'Footer fifth'
 
 # Information added by Drupal.org packaging script on 2019-02-25
-version: '8.x-1.9'
+version: '8.x-1.x'
 core: '8.x'
-project: 'duson'
 datestamp: 1551065297

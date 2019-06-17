@@ -17,17 +17,29 @@ use Drupal\ckeditor\CKEditorPluginBase;
 class Btbutton extends CKEditorPluginBase {
 
   /**
+   * Get path to library folder.
+   */
+  public function getLibraryPath() {
+    if (\Drupal::moduleHandler()->moduleExists('libraries')) {
+      return libraries_get_path('btbutton');
+    }
+    else {
+      return 'libraries/btbutton';
+    }
+  }
+
+  /**
    * Implements \Drupal\ckeditor\Plugin\CKEditorPluginInterface::getFile().
    */
   public function getFile() {
-    return base_path() . 'libraries/btbutton/plugin.js';
+    return $this->getLibraryPath() . '/plugin.js';
   }
 
   /**
    * {@inheritdoc}
    */
   public function getLibraries(Editor $editor) {
-    return array();
+    return [];
   }
 
   /**
@@ -41,19 +53,19 @@ class Btbutton extends CKEditorPluginBase {
    * {@inheritdoc}
    */
   public function getButtons() {
-    return array(
-      'btbutton' => array(
-        'label' => t('Bootstrap Buttons'),
-        'image' => base_path() . 'libraries/btbutton/icons/btbutton.png',
-      ),
-    );
+    return [
+      'btbutton' => [
+        'label' => $this->t('Bootstrap Buttons'),
+        'image' => $this->getLibraryPath() . '/icons/btbutton.png',
+      ],
+    ];
   }
 
   /**
    * {@inheritdoc}
    */
   public function getConfig(Editor $editor) {
-    return array();
+    return [];
   }
 
 }
