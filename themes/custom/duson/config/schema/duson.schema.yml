@@ -1,5 +1,5 @@
-# Schema for the theme setting configuration file of the Duson theme.
+# Schema for the configuration files of the Bootstrap SASS Subtheme.
 
 duson.settings:
   type: theme_settings
-  label: 'Duson settings'
+  label: 'Duson theme settings'

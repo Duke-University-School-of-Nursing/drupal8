@@ -16,33 +16,6 @@
   height: auto;
 }
 
-#navbar-collapse:not(.in) {
-  #block-duson-search {
-    max-width: 300px;
-    min-width: 40px;
-    overflow: hidden;
-    padding: 8px 0 0 0;
-    margin: 0;
-    position: absolute;
-    right: 0;
-    text-align: right;
-    form {
-      .form-search {
-        display: none;
-      }
-      &:hover .form-search {
-        display: inline-block;
-      }
-      .input-group-btn {
-        width: 0;
-        button.form-submit {
-          margin: 0 5px;
-          border-radius: 4px;
-        }
-      }
-    }
-  }
-}
 /* Bootstrap Paragraphs. */
 
 /* Paragraphs background colors */
