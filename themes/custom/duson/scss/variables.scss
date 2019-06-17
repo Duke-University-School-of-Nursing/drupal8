@@ -8,10 +8,10 @@ $accent-shade: #0079C0;
 $accent-light: lighten($accent-shade, 37%);
 $accent-dark: darken($accent-shade, 12%);
 // Reassign color vars to semantic color scheme
-$red: #dc3545;
-$yellow: #ffc107;
-$green: #28a745;
-$cyan: #17a2b8;
+$red: #C84E00;
+$yellow: #FFD960;
+$green: #A1B70D;
+$cyan: #339898;
 $gray-100: #f8f9fa !default;
 $gray-800: #343a40 !default;
 $theme-colors: ( primary: $accent-shade, secondary: $primary-shade, success: $green, info: $cyan, warning: $yellow, danger: $red, light: $gray-100, dark: $gray-800);
