@@ -63,18 +63,28 @@
   background-size: cover;
   &.small {
     height: 20vw;
+    padding-top: 10vw;
+    padding-bottom: 5vw;
   }
   &.medium {
     height: 30vw;
+    padding-top: 15vw;
+    padding-bottom: 10vw;
   }
   &.large {
     height: 40vw;
+    padding-top: 20vw;
+    padding-bottom: 15vw;
   }
   &.exlarge {
     height: 60vw;
+    padding-top: 30vw;
+    padding-bottom: 20vw;
   }
   &.huge {
     height: 80vw;
+    padding-top: 40vw;
+    padding-bottom: 25vw;
   }
   .field--name-field-height {
     display: none;
