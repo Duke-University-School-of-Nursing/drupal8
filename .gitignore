@@ -5,6 +5,9 @@ sites/*/settings*.php
 sites/*/services*.yml
 .sass-cache
 
+# ignore compiled css
+themes/custom/duson/css/style.css
+themes/custom/duson/css/style.min.css
 # Ignore paths that contain user-generated content.
 sites/*/files
 sites/*/private
