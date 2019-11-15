@@ -8,7 +8,7 @@ sites/*/services*.yml
 # Ignore paths that contain user-generated content.
 sites/*/files
 sites/*/private
-/vendor/
+#/vendor/
 # Ignore files created by JetBrains IDE
 .idea/
 .idea/*
