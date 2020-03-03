@@ -4,6 +4,13 @@
   text-align: center;
 }
 
+// Fix for IMCE browser
+.imce-folder-content {
+  .file {
+    display: block;
+  }
+}
+
 /**
 * For ckeditor bootstrap grid images.
 */
