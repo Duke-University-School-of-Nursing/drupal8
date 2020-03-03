@@ -1,0 +1,10 @@
+name: Shibboleth authentication
+type: module
+description: Provides user authentication with Shibboleth (both v1.3 and v2.0) as well as some authorisation features (automatic role assignment based on Shibboleth attributes).
+core: 8.x
+package: Shibboleth
+
+# Information added by Drupal.org packaging script on 2019-09-21
+version: '8.x-1.x-dev'
+project: 'shib_auth'
+datestamp: 1569109386

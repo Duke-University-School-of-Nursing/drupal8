@@ -35,7 +35,7 @@
     var children;
     var Item = this;
     if (!Item.el) {
-      el = Item.el = imce.createEl('<div class="imce-item"><div class="imce-item-date"></div><div class="imce-item-height"></div><div class="imce-item-width"></div><div class="imce-item-size"></div><div class="imce-item-icon imce-ficon"></div><div class="imce-item-name"></div><div class="imce-item-uuid"></div><div class="imce-item-src"></div></div>');
+      el = Item.el = imce.createEl('<div class="imce-item"><div class="imce-item-date"></div><div class="imce-item-height"></div><div class="imce-item-width"></div><div class="imce-item-size"></div><div class="imce-item-icon imce-ficon"></div><div class="imce-item-name"></div></div>');
       el.onmousedown = imce.eItemMousedown;
       el.ondblclick = imce.eItemDblclick;
       el.Item = Item;
@@ -46,8 +46,6 @@
       Item.sizeEl = children[3];
       Item.iconEl = children[4];
       Item.nameEl = children[5];
-      Item.uuidEl = children[6];
-      Item.srcEl = children[7];
     }
   };
 
@@ -250,20 +248,6 @@
   };
 
   /**
-   * Formats item uuid.
-   */
-  Item.formatUUID = function () {
-    return this.uuid;
-  };
-
-  /**
-   * Formats item src.
-   */
-  Item.formatSrc = function () {
-    return this.src;
-  };
-
-  /**
    * Formats item width.
    */
   Item.formatWidth = function () {
@@ -342,6 +326,20 @@
   };
 
   /**
+   * Thumbnail change handler.
+   */
+  Item.onThumbnailChange = function (oldval) {
+    if (this.thumbnail) {
+      this.iconEl.innerHTML = '<img src="' + this.thumbnail + '" alt="thumbnail">';
+      this.iconEl.className += ' imce-item-thumbnail';
+    }
+    else {
+      this.iconEl.innerHTML = '';
+      $(this.iconEl).removeClass('imce-item-thumbnail');
+    }
+  };
+
+  /**
    * Size change handler.
    */
   Item.onSizeChange = function (oldval) {
@@ -370,19 +368,6 @@
     this.heightEl.innerHTML = this.formatHeight();
   };
 
-  /**
-   * UUID change handler.
-   */
-  Item.onUuidChange = function (oldval) {
-    this.uuidEl.innerHTML = this.formatUUID();
-  };
-
-  /**
-   * Src change handler.
-   */
-  Item.onSrcChange = function (oldval) {
-    this.srcEl.innerHTML = this.formatSrc();
-  };
 
   /**
    * Creates preview element.
@@ -415,12 +400,6 @@
     // Date
     if (Item.date) {
       infoEl.appendChild(imce.createEl('<div class="date">' + Item.formatDate() + '</div>'));
-    }
-    if (Item.uuid) {
-      infoEl.appendChild(imce.createEl('<div class="uuid">' + Item.formatUUID() + '</div>'));
-    }
-    if (Item.src) {
-      infoEl.appendChild(imce.createEl('<div class="src">' + Item.formatSrc() + '</div>'));
     }
     // Image
     if (Item.isImageSource() && imce.getConf('preview_images', 1)) {

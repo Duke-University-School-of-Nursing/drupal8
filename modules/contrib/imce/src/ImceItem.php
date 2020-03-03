@@ -8,7 +8,7 @@ namespace Drupal\imce;
 abstract class ImceItem {
 
   /**
-   * Item type
+   * Item type.
    *
    * @var string
    */
@@ -24,7 +24,7 @@ abstract class ImceItem {
   /**
    * Selected status.
    *
-   * @var boolean
+   * @var bool
    */
   public $selected;
 
@@ -36,7 +36,7 @@ abstract class ImceItem {
   public $parent;
 
   /**
-   * File manager
+   * File manager.
    *
    * @var \Drupal\imce\ImceFM
    */
@@ -48,13 +48,6 @@ abstract class ImceItem {
    * @var string
    */
   protected $path;
-
-  /**
-   * File.
-   *
-   * @var string
-   */
-  protected $file;
 
   /**
    * Constructs the item.
@@ -103,20 +96,6 @@ abstract class ImceItem {
     if (isset($path)) {
       return $this->fm()->createUri($path);
     }
-  }
-
-  /**
-   * Set the item file.
-   */
-  public function addFile($file) {
-    $this->file = $file;
-  }
-
-  /**
-   * Returns the item file.
-   */
-  public function getFile() {
-    return $this->file;
   }
 
   /**
