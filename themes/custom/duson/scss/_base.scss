@@ -24,17 +24,6 @@
 }
 
 /* Bootstrap Paragraphs. */
-
-/* Paragraphs background colors */
-.paragraph--color--primary,
-.paragraph--color--secondary,
-.paragraph--color--success,
-.paragraph--color--info,
-.paragraph--color--warning,
-.paragraph--color--danger {
-  background: transparent;
-}
-
 .paragraph--width--full.paragraph--type--bp-carousel {
   &.bp-carousel-height-small {
     .carousel-inner {
