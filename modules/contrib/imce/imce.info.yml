@@ -7,8 +7,3 @@ core_version_requirement: ^8 || ^9
 configure: imce.admin
 dependencies:
   - 'drupal:system (>= 8.5)'
-
-# Information added by Drupal.org packaging script on 2020-02-26
-version: '8.x-1.8+65-dev'
-project: 'imce'
-datestamp: 1582749817

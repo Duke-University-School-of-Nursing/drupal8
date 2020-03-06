@@ -1,7 +1,7 @@
 ultimenu:
   version: VERSION
   js:
-    js/ultimenu.js: {}
+    js/ultimenu.min.js: {}
   css:
     theme:
       css/ultimenu.css: {}

@@ -93,7 +93,7 @@
  * .is-ultimenu-canvas--hover is only available if off-canvas is not enabled for
  * both modile and desktop.
  */
-@media all and (min-width: 991px) {
+@media all and (min-width: 59em) {
 
   /** Hide mobile menu, if off-canvas is DISABLED for desktop. */
   .is-ultimenu-canvas--hover .button.button--ultimenu {

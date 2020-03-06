@@ -7,7 +7,7 @@
 }
 
 /** 944px with 16px base font. */
-@media only screen and (min-width: 991px) {
+@media only screen and (min-width: 59em) {
   .ultimenu--basic .block {
     display: inline-block;
     vertical-align: top;

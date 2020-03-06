@@ -42,7 +42,7 @@
  * both desktop and mobile. Or a little later via JS if not. That's why we don't
  * rely on it for the smaller device to avoid FOUC.
  */
-@media only screen and (max-width: 990px) {
+@media only screen and (max-width: 58.999em) {
 
   /** The #header alike element, out of canvas by default, can exist once. */
   .is-ultimenu-canvas .is-ultimenu-canvas-off {

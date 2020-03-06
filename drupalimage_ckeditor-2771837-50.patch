@@ -1,0 +1,89 @@
+diff --git a/core/modules/ckeditor/js/plugins/drupalimage/plugin.es6.js b/core/modules/ckeditor/js/plugins/drupalimage/plugin.es6.js
+index 88add4f4b..f9ce77243 100644
+--- a/core/modules/ckeditor/js/plugins/drupalimage/plugin.es6.js
++++ b/core/modules/ckeditor/js/plugins/drupalimage/plugin.es6.js
+@@ -141,10 +141,10 @@
+         // CKEDITOR.style is an immutable object: we cannot modify its
+         // definition to extend requiredContent. Hence we get the definition,
+         // modify it, and pass it to a new CKEDITOR.style instance.
+-        const requiredContent = widgetDefinition.requiredContent.getDefinition();
+-        requiredContent.attributes['data-entity-type'] = '';
+-        requiredContent.attributes['data-entity-uuid'] = '';
+-        widgetDefinition.requiredContent = new CKEDITOR.style(requiredContent);
++        //const requiredContent = widgetDefinition.requiredContent.getDefinition();
++        //requiredContent.attributes['data-entity-type'] = '';
++        //requiredContent.attributes['data-entity-uuid'] = '';
++        //widgetDefinition.requiredContent = new CKEDITOR.style(requiredContent);
+         widgetDefinition.allowedContent.img.attributes[
+           '!data-entity-type'
+         ] = true;
+@@ -158,10 +158,10 @@
+         widgetDefinition.downcast = function(element) {
+           element.attributes['data-entity-type'] = this.data[
+             'data-entity-type'
+-          ];
++          ] ? this.data['data-entity-type'] : 'image';
+           element.attributes['data-entity-uuid'] = this.data[
+             'data-entity-uuid'
+-          ];
++          ] ? this.data['data-entity-uuid'] : 0;
+         };
+ 
+         // We want to upcast <img> elements to a DOM structure required by the
+diff --git a/core/modules/ckeditor/js/plugins/drupalimage/plugin.js b/core/modules/ckeditor/js/plugins/drupalimage/plugin.js
+index 6825110a3..ebae9695c 100644
+--- a/core/modules/ckeditor/js/plugins/drupalimage/plugin.js
++++ b/core/modules/ckeditor/js/plugins/drupalimage/plugin.js
+@@ -82,16 +82,16 @@
+           }
+         });
+ 
+-        var requiredContent = widgetDefinition.requiredContent.getDefinition();
+-        requiredContent.attributes['data-entity-type'] = '';
+-        requiredContent.attributes['data-entity-uuid'] = '';
+-        widgetDefinition.requiredContent = new CKEDITOR.style(requiredContent);
++        //var requiredContent = widgetDefinition.requiredContent.getDefinition();
++        //requiredContent.attributes['data-entity-type'] = '';
++        //requiredContent.attributes['data-entity-uuid'] = '';
++        //widgetDefinition.requiredContent = new CKEDITOR.style(requiredContent);
+         widgetDefinition.allowedContent.img.attributes['!data-entity-type'] = true;
+         widgetDefinition.allowedContent.img.attributes['!data-entity-uuid'] = true;
+ 
+         widgetDefinition.downcast = function (element) {
+-          element.attributes['data-entity-type'] = this.data['data-entity-type'];
+-          element.attributes['data-entity-uuid'] = this.data['data-entity-uuid'];
++          element.attributes['data-entity-type'] = this.data['data-entity-type'] ? this.data['data-entity-type'] : 'image';
++          element.attributes['data-entity-uuid'] = this.data['data-entity-uuid'] ? this.data['data-entity-uuid'] : 0;
+         };
+ 
+         widgetDefinition.upcast = function (element, data) {
+diff --git a/core/modules/ckeditor/js/plugins/drupalimagecaption/plugin.es6.js b/core/modules/ckeditor/js/plugins/drupalimagecaption/plugin.es6.js
+index 1e63c4b78..02cad564e 100644
+--- a/core/modules/ckeditor/js/plugins/drupalimagecaption/plugin.es6.js
++++ b/core/modules/ckeditor/js/plugins/drupalimagecaption/plugin.es6.js
+@@ -149,11 +149,7 @@
+           // We take the same attributes into account as downcast() does.
+           const originalUpcast = widgetDefinition.upcast;
+           widgetDefinition.upcast = function(element, data) {
+-            if (
+-              element.name !== 'img' ||
+-              !element.attributes['data-entity-type'] ||
+-              !element.attributes['data-entity-uuid']
+-            ) {
++            if (element.name !== 'img') {
+               return;
+             }
+             // Don't initialize on pasted fake objects.
+diff --git a/core/modules/ckeditor/js/plugins/drupalimagecaption/plugin.js b/core/modules/ckeditor/js/plugins/drupalimagecaption/plugin.js
+index 7cd215a70..c30ceeeb6 100644
+--- a/core/modules/ckeditor/js/plugins/drupalimagecaption/plugin.js
++++ b/core/modules/ckeditor/js/plugins/drupalimagecaption/plugin.js
+@@ -86,7 +86,7 @@
+ 
+         var originalUpcast = widgetDefinition.upcast;
+         widgetDefinition.upcast = function (element, data) {
+-          if (element.name !== 'img' || !element.attributes['data-entity-type'] || !element.attributes['data-entity-uuid']) {
++          if (element.name !== 'img') {
+             return;
+           }
+ 

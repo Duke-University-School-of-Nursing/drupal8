@@ -145,7 +145,7 @@ body:not(:target) .ultimenu .ultimenu__region .menu-item {
 /**
  * 944px+ with 16px base font.
  */
-@media all and (min-width: 991px) {
+@media all and (min-width: 59em) {
   .ultimenu .ultimenu__link {
     line-height: 1.4;
   }

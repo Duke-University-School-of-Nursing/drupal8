@@ -33,7 +33,7 @@
   transition-delay: .2s;
   height: 100%;
   width: 100%;
-  z-index: 499;
+  z-index: 9997;
 }
 
 /** If off-canvas is enabled for both mobile and desktop. */
@@ -54,8 +54,7 @@
   display: block;
   float: none;
   width: 100%;
-  /** Changed from 9998 to 500 for admin toolbar */
-  z-index: 500;
+  z-index: 9998;
 }
 
 /** The #header alike element, if activated for both desktop and mobile. */
@@ -96,7 +95,7 @@
  * both desktop and mobile. Or a little later via JS if not. That's why we don't
  * rely on it for the smaller device to avoid FOUC.
  */
-@media only screen and (max-width: 990px) {
+@media only screen and (max-width: 58.999em) {
   /** The #header alike element. This ensures it always kicks in. */
   .is-ultimenu-canvas .is-ultimenu-canvas-off {
     max-width: 80%;

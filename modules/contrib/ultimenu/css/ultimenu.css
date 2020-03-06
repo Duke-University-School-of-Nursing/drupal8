@@ -61,7 +61,7 @@
 /**
  * 944px below with 16px base font.
  */
-@media all and (max-width: 990px) {
+@media all and (max-width: 58.999em) {
   .ultimenu > li,
   .ultimenu .ultimenu__link {
     min-width: 100%;
@@ -87,7 +87,7 @@
  *
  * .ultimenu--hover is for when off-canvas is disabled for desktop.
  */
-@media all and (min-width: 991px) {
+@media all and (min-width: 59em) {
   .ultimenu--hover > li {
     display: inline-block;
     vertical-align: bottom;
@@ -116,7 +116,7 @@
  * 1025px with 16px base font, assumes no-touch devices.
  * Use Modernizr.js to have correct touch detection.
  */
-@media only screen and (min-width: 991px) {
+@media only screen and (min-width: 64.063em) {
   /* Ultimenu flyout: Never display: none, bad for animation. */
   .ultimenu--hover .ultimenu__flyout {
     display: block !important; /* Intentional !important to avoid overrides */
@@ -133,7 +133,7 @@
   .ultimenu--hover li:hover > .ultimenu__flyout,
   .ultimenu--hover li a:active + .ultimenu__flyout,
   .ultimenu--hover li a:focus + .ultimenu__flyout,
-  .ultimenu--hover li .ultimenu__flyout:focus-within {
+  .ultimenu--hover li .ultimenu__flyout:focus {
     max-height: none;
     min-height: 64px;
     padding: 20px 0;
@@ -147,7 +147,7 @@
   .ultimenu--htt li:hover > .ultimenu__flyout,
   .ultimenu--htt li a:active + .ultimenu__flyout,
   .ultimenu--htt li a:focus + .ultimenu__flyout,
-  .ultimenu--htt li .ultimenu__flyout:focus-within {
+  .ultimenu--htt li .ultimenu__flyout:focus {
     bottom: 100%;
     max-height: none;
     top: auto;
