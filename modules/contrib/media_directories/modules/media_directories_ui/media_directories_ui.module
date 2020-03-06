@@ -1,0 +1,275 @@
+<?php
+
+/**
+ * @file
+ * Main module file.
+ */
+
+use Drupal\block\Entity\Block;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Asset\AttachedAssetsInterface;
+use Drupal\Core\Form\FormState;
+use Drupal\Core\Url;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\media_directories_ui\Form\FileUploadForm;
+use Drupal\media_directories_ui\Form\OEmbedForm;
+
+/**
+ * Implements hook_theme().
+ */
+function media_directories_ui_theme($existing, $type, $theme, $path) {
+  return [
+    'media_directories_browser' => [
+      'render element' => 'browser',
+    ],
+    'dropzonejs__media_upload' => [
+      'base hook' => 'dropzonejs',
+      'template' => 'dropzonejs--media-upload',
+    ],
+    'media_directories_add' => [
+      'variables' => [
+        'selected_type' => NULL,
+        'active_directory' => NULL,
+        'target_bundles' => NULL,
+      ],
+    ],
+    'views_view_unformatted__media_directories_base' => [
+      'base hook' => 'views_view_unformatted',
+      'template' => 'views-view-unformatted--media-directories-base',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_css_alter().
+ */
+function media_directories_ui_css_alter(&$css, AttachedAssetsInterface $assets) {
+  $route = 'entity_browser.media_directories_overview';
+
+  if (Drupal::routeMatch()->getRouteName() === $route) {
+    unset($css[drupal_get_path('module', 'entity_browser') . '/css/entity_browser.entity_browser.css']);
+  }
+}
+
+/**
+ * Implements hook_library_info_alter().
+ *
+ * Note: libraries_get_path() is deprecated and will be removed before a stable
+ * libraries Drupal 8 release. Needs update when libraries module is supporting
+ * variants.
+ * https://www.drupal.org/node/1704734
+ */
+function media_directories_ui_library_info_alter(&$libraries, $extension) {
+  if ($extension === 'jstree' && function_exists('libraries_get_path')) {
+    // Use Libraries API's path.
+    $libraries['jstree']['js'] = ['/' . libraries_get_path('jstree') . '/jstree.min.js' => ['weight' => -4]];
+  }
+}
+
+/**
+ * Implements hook_block_access().
+ */
+function media_directories_ui_block_access(Block $block, $operation, AccountInterface $account) {
+
+  if ($operation == 'view' && $block->getPluginId() == 'page_title_block') {
+    // Hide the page title block when showing the modal dialogs to ensure the "Select media" button is visible.
+    $entity_browser_id = \Drupal::routeMatch()->getParameter('entity_browser_id');
+    return AccessResult::forbiddenIf(in_array($entity_browser_id, ['media_directories_modal', 'media_directories_editor_browser']))->addCacheableDependency($block);
+  }
+
+  return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function media_directories_ui_views_data_alter(array &$data) {
+  $data['media_field_data']['media_name']['argument'] = [
+    'id' => 'media_directory_ui_string_contains',
+    'title' => t('Media name'),
+    'help' => t('Media name contains characters.'),
+    'field' => 'name',
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function media_directories_ui_preprocess_views_view_unformatted__media_directories_base(&$variables) {
+  foreach ($variables['rows'] as &$row) {
+    /** @var \Drupal\media\Entity\Media $entity */
+    $entity = $row['content']['#row']->_entity;
+    $entity_id = $entity->id();
+    $row['attributes']->setAttribute('data-mid', $entity_id);
+    $row['attributes']->addClass('media-item');
+    $row['attributes']->addClass('media-type--' . $entity->bundle());
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function media_directories_ui_preprocess_media_directories_browser(&$variables) {
+  $variables['media_translation_enabled'] = FALSE;
+  if (\Drupal::service('module_handler')->moduleExists('content_translation')) {
+    $variables['media_translation_enabled'] = \Drupal::service('content_translation.manager')->isEnabled('media');
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function media_directories_ui_preprocess_views_view_fields__media_directories_base(&$variables) {
+  foreach ($variables['fields'] as $name => &$field) {
+    /** @var \Drupal\media\Entity\Media $entity */
+    $entity = $variables['row']->_entity;
+
+    if ($name === 'thumbnail__target_id') {
+      $field->wrapper_attributes->addClass('media-thumbnail');
+      $field->wrapper_attributes->addClass('media-thumbnail--' . $entity->bundle());
+    }
+    elseif ($name === 'name') {
+      $field->wrapper_attributes->addClass('media-name');
+      $field->wrapper_attributes->addClass('media-name--' . $entity->bundle());
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function media_directories_ui_preprocess_media_directories_add(&$variables) {
+  /** @var \Drupal\media\Entity\MediaType[] $types */
+  $types = \Drupal::entityTypeManager()->getStorage('media_type')->loadMultiple();
+
+  $variables['links'] = [
+    '#theme' => 'links',
+    '#links' => [],
+    '#attributes' => [
+      'class' => ['media-library-menu', 'js-media-library-menu'],
+    ],
+  ];
+
+  foreach ($types as $type) {
+    if (!is_array($variables['target_bundles']) || !in_array($type->id(), $variables['target_bundles'], TRUE)) {
+      continue;
+    }
+
+    $variables['links']['#links'][$type->id()] = [
+      'title' => $type->label(),
+      'url' => Url::fromRoute('media_directories_ui.media.add', [], [
+        'query' => [
+          'media_type' => $type->id(),
+          'active_directory' => $variables['active_directory'],
+          'target_bundles' => $variables['target_bundles'],
+        ],
+        ]),
+      'attributes' => ['class' => ['use-ajax', 'media-library-menu__link']],
+    ];
+
+    if ($variables['selected_type'] === $type->id()) {
+      $variables['links']['#links'][$type->id()]['attributes']['class'][] = 'active';
+    }
+  }
+
+  $type = $types[$variables['selected_type']];
+
+  $form_state = new FormState();
+  $form_state->setValue('media_type', $type);
+
+  $source_field = $type->getSource()->getConfiguration()['source_field'];
+  $field_config = \Drupal::entityTypeManager()->getStorage('field_config')->load('media.' . $type->id() .'.' . $source_field);
+
+  $form_state = new FormState();
+  $form_state->set('media_type', $type);
+  $form_state->set('active_directory', $variables['active_directory']);
+  $form_state->set('target_bundles', $variables['target_bundles']);
+
+  if (in_array($field_config->getType(), ['file', 'image'])) {
+    $variables['media_form'] = \Drupal::formBuilder()->buildForm(FileUploadForm::class, $form_state);
+  }
+  else {
+    $variables['media_form'] = \Drupal::formBuilder()->buildForm(OEmbedForm::class, $form_state);
+  }
+
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function media_directories_ui_form_entity_browser_media_directories_overview_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if (!_media_directories_ui_library_file_exists('jstree')) {
+    \Drupal::messenger()->addError(t('The <a href=":url">jsTree library</a> should be installed at <strong>/libraries/jstree/dist/jstree.min.js</strong>, or any path supported by libraries.module if installed.', [':url' => 'https://github.com/vakata/jstree']));
+  }
+
+  if(!_media_directories_ui_vocabulary_set()) {
+    $settings_url = Url::fromRoute('media_directories.config_form');
+    \Drupal::messenger()->addError(t('Vocabulary is not selected. Please select it in the <a href=":url">settings</a>.', [':url' => $settings_url->toString()]));
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function media_directories_ui_form_entity_browser_media_directories_modal_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if (!_media_directories_ui_library_file_exists('jstree')) {
+    \Drupal::messenger()->addError(t('The <a href=":url">jsTree library</a> should be installed at <strong>/libraries/jstree/dist/jstree.min.js</strong>, or any path supported by libraries.module if installed.', [':url' => 'https://github.com/vakata/jstree']));
+  }
+
+  if(!_media_directories_ui_vocabulary_set()) {
+    $settings_url = Url::fromRoute('media_directories.config_form');
+    \Drupal::messenger()->addError(t('Vocabulary is not selected. Please select it in the <a href=":url">settings</a>.', [':url' => $settings_url->toString()]));
+  }
+}
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ */
+function media_directories_ui_field_widget_entity_browser_entity_reference_form_alter(&$element, \Drupal\Core\Form\FormStateInterface $form_state, $context) {
+  if (isset($element['entity_browser']) && $element['entity_browser']['#entity_browser'] === 'media_directories_modal') {
+    /** @var \Drupal\Core\Field\EntityReferenceFieldItemList $items */
+    $items = $context['items'];
+    $handler_settings = $items->getSetting('handler_settings');
+    $target_bundles = $handler_settings['target_bundles'];
+    // Add bundle validation constraint to entity browser.
+    $element['entity_browser']['#entity_browser_validators']['target_bundles'] = ['bundle' => $target_bundles];
+
+    $current_items = $element['current']['items'];
+    $cardinality = $element['entity_browser']['#cardinality'];
+
+    $element['entity_browser']['#widget_context']['remaining'] = $cardinality - count($current_items);
+  }
+}
+
+/**
+ *  Helper function to see if a library file exists.
+ */
+function _media_directories_ui_library_file_exists($library_name) {
+  if (function_exists('libraries_get_path') && libraries_get_path($library_name)) {
+    // Libraries API is active and library file is in place.
+    return TRUE;
+  }
+
+  /** @var \Drupal\Core\Asset\LibraryDiscoveryInterface $library_discovery */
+  $library_discovery = \Drupal::service('library.discovery');
+  $library = $library_discovery->getLibraryByName('media_directories_ui', $library_name);
+  if ($library && file_exists($library['js'][0]['data'])) {
+    // File is in place.
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+/**
+ *  Helper function to see if vocabulary is setup.
+ */
+function _media_directories_ui_vocabulary_set() {
+  $vid = \Drupal::config('media_directories.settings')->get('directory_taxonomy');
+  if (!empty($vid)) {
+    // Vocabulary is set.
+    return TRUE;
+  }
+
+  return FALSE;
+}
